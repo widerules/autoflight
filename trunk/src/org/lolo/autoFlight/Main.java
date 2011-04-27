@@ -80,7 +80,16 @@ public class Main extends Activity {
 			cal.set(Calendar.MINUTE, 0);
 			
 		} else {
-			cal.setTimeInMillis(Long.valueOf(hour));
+			Long hourInMillis = Long.valueOf(hour);
+			Calendar savedTime = Calendar.getInstance();
+			savedTime.setTimeInMillis(hourInMillis);
+			
+			cal.set(Calendar.HOUR_OF_DAY, savedTime.get(Calendar.HOUR_OF_DAY));
+			cal.set(Calendar.MINUTE, savedTime.get(Calendar.MINUTE));
+			
+			if (cal.getTimeInMillis() < Calendar.getInstance().getTimeInMillis()) {
+				cal.roll(Calendar.DAY_OF_MONTH, 1);
+			}
 		}
 
 		final TimePicker tp = (TimePicker) findViewById(R.id.tpFlightTime);
