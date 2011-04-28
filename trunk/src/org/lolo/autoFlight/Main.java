@@ -65,6 +65,9 @@ public class Main extends Activity {
         initAskerInTime();
     }
 
+	/**
+	 * Initialisation du timepicker avec l'heure qui a déjà été saisie... ou pas
+	 */
 	private void initTimePicker() {
 		// on récupère l'heure actuelle stockée (ou pas)
 		SharedPreferences sp = getSharedPreferences("autoFlight",
@@ -97,13 +100,17 @@ public class Main extends Activity {
 		tp.setCurrentMinute(cal.get(Calendar.MINUTE));
 	}
 
-	public void initAskerInTime() {
+	/**
+	 * Initialisation de l'alarme du mode avion
+	 */
+	private void initAskerInTime() {
 		// on récupère l'heure actuelle stockée (ou pas)
 		SharedPreferences sp = getSharedPreferences("autoFlight",
 				Activity.MODE_WORLD_WRITEABLE);
 		// et voici l'heure... En timmeInMillis of course
 		String hour = sp.getString("hour", "");
 
+		// a-t-on déjà configuré l'heure du mode avion
 		if ("".equals(hour)) {
 			Calendar tomorrow = Calendar.getInstance();
 			tomorrow.roll(Calendar.DAY_OF_MONTH, 1);
