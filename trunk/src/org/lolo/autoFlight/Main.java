@@ -30,6 +30,7 @@ public class Main extends Activity {
         setContentView(R.layout.main);
 
 		final TimePicker tp = (TimePicker) findViewById(R.id.tpFlightTime);
+		tp.setIs24HourView(Boolean.TRUE);
 		// on récupère l'heure actuelle stockée (ou pas)
 		final SharedPreferences sp = getSharedPreferences("autoFlight",
 				Activity.MODE_WORLD_WRITEABLE);
@@ -121,6 +122,16 @@ public class Main extends Activity {
 		}
 
 		Long hourInMillis = Long.valueOf(hour);
+		// on regarde si l'heure est avant maintenant ou pas dans quel cas on 
+		// pousse d'un jour
+		if (hourInMillis < Calendar.getInstance().getTimeInMillis()) {
+			Calendar alarmHour = Calendar.getInstance();
+			alarmHour.setTimeInMillis(hourInMillis);
+			alarmHour.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + 1);
+			alarmHour.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH));
+			
+			hourInMillis = alarmHour.getTimeInMillis();
+		}
 
 		// Récupération de l'instance du service AlarmManager.
 		AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
