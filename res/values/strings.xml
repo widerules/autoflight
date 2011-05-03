@@ -5,4 +5,7 @@
     <string name="question">Voulez-vous passer en mode Avion?</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
+    <string name="bigTitle">Configuration</string>
+    <string name="txtBeginDate">Heure d\'entrée en mode avion</string>
+    <string name="txtEndDate">Heure de sortie du mode avion</string>
 </resources>
