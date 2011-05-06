@@ -8,7 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-public class AlarmBootReceiver extends BroadcastReceiver {
+public class SleepAlarmBootReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent arg1) {
@@ -28,7 +28,7 @@ public class AlarmBootReceiver extends BroadcastReceiver {
 					.getSystemService(Context.ALARM_SERVICE);
 
 			// On instancie l'Intent qui va être appelé au moment du reveil.
-			Intent intent = new Intent(context, AlarmReceiver.class);
+			Intent intent = new Intent(context, SleepAlarmReceiver.class);
 
 			// On créer le pending Intent qui identifie l'Intent de reveil avec
 			// un

@@ -11,11 +11,11 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<receiver android:name="AlarmReceiver" android:process=":remote" />
+		<receiver android:name="SleepAlarmReceiver" android:process=":remote" />
 		<activity android:name=".Chooser" android:label="@string/app_name"
 			android:launchMode="singleTask">
 		</activity>
-		<receiver android:name="AlarmBootReceiver">
+		<receiver android:name="SleepAlarmBootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
