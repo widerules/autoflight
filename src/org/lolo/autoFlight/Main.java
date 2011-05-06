@@ -29,13 +29,16 @@ public class Main extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-		final TimePicker tp = (TimePicker) findViewById(R.id.tpFlightTime);
-		tp.setIs24HourView(Boolean.TRUE);
+		final TimePicker tpSleep = (TimePicker) findViewById(R.id.tpFlightTime);
+		tpSleep.setIs24HourView(Boolean.TRUE); 
+		final TimePicker tpWake = (TimePicker) findViewById(R.id.tpFlightOutTime);
+		tpWake.setIs24HourView(Boolean.TRUE);
+		
 		// on récupère l'heure actuelle stockée (ou pas)
 		final SharedPreferences sp = getSharedPreferences("autoFlight",
 				Activity.MODE_WORLD_WRITEABLE);
 		
-		initTimePicker();
+		initTimePickers();
 		
         // 
         Button btnSave = (Button) findViewById(R.id.btnSavePref);
@@ -44,8 +47,8 @@ public class Main extends Activity {
 			@Override
 			public void onClick(View v) {
 				
-				Integer hour = tp.getCurrentHour();
-				Integer min = tp.getCurrentMinute();
+				Integer hour = tpSleep.getCurrentHour();
+				Integer min = tpSleep.getCurrentMinute();
 				Calendar cal = Calendar.getInstance();
 				
 				if (hour < cal.get(Calendar.HOUR_OF_DAY) || (hour == cal.get(Calendar.HOUR_OF_DAY) && min < cal.get(Calendar.MINUTE))) {
@@ -69,7 +72,7 @@ public class Main extends Activity {
 	/**
 	 * Initialisation du timepicker avec l'heure qui a déjà été saisie... ou pas
 	 */
-	private void initTimePicker() {
+	private void initTimePickers() {
 		// on récupère l'heure actuelle stockée (ou pas)
 		SharedPreferences sp = getSharedPreferences("autoFlight",
 				Activity.MODE_WORLD_WRITEABLE);
@@ -96,9 +99,11 @@ public class Main extends Activity {
 			}
 		}
 
-		final TimePicker tp = (TimePicker) findViewById(R.id.tpFlightTime);
-		tp.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
-		tp.setCurrentMinute(cal.get(Calendar.MINUTE));
+		final TimePicker tpSleep = (TimePicker) findViewById(R.id.tpFlightTime);
+		final TimePicker tpWake = (TimePicker) findViewById(R.id.tpFlightOutTime);
+		tpSleep.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
+		tpSleep.setCurrentMinute(cal.get(Calendar.MINUTE));
+		tpWake.setCurrentMinute(cal.get(Calendar.MINUTE));
 	}
 
 	/**
@@ -137,7 +142,7 @@ public class Main extends Activity {
 		AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
 		// On instancie l'Intent qui va être appelé au moment du reveil.
-		Intent intent = new Intent(this, AlarmReceiver.class);
+		Intent intent = new Intent(this, SleepAlarmReceiver.class);
 
 		// On créer le pending Intent qui identifie l'Intent de reveil avec un
 		// ID et un/des flag(s)

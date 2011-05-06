@@ -12,7 +12,7 @@ import android.os.Vibrator;
  * @author lolo
  *
  */
-public class AlarmReceiver extends BroadcastReceiver {
+public class SleepAlarmReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent arg1) {
