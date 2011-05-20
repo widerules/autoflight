@@ -17,17 +17,17 @@ public class Chooser extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.chooser);
 
-		// on récupère l'heure à laquelle on devait sonner
+		// on rÃ©cupÃ©re l'heure Ã  laquelle on devait sonner
 		// SharedPreferences sp = getSharedPreferences("autoFlight",
 		// Activity.MODE_WORLD_WRITEABLE);
 		// String hour = sp.getString("hour", "");
 		// Long hourInMillis = Long.valueOf(hour);
 
-		// récupération du bouton oui
+		// rÃ©cupÃ©ration du bouton oui
 		Button btnYes = (Button) findViewById(R.id.btnYes);
-		// récupération du bouton non
+		// rÃ©cupÃ©ration du bouton non
 		Button btnNo = (Button) findViewById(R.id.btnNo);
-		// récupération du chrono
+		// rÃ©cupÃ©ration du chrono
 		final TextView chrono = (TextView) findViewById(R.id.textViewCountDown);
 		final CountDownTimer counter = new CountDownTimer(60000, 1000) {
 
