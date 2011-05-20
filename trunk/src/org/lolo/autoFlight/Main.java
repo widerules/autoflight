@@ -140,7 +140,7 @@ public class Main extends Activity {
 		AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
 		// On instancie l'Intent qui va être appelé au moment du reveil.
-		Intent intent = new Intent(this, AlarmReceiver.class);
+		Intent intent = new Intent(this, SleepAlarmReceiver.class);
 
 		// On créer le pending Intent qui identifie l'Intent de reveil avec un
 		// ID et un/des flag(s)
