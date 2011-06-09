@@ -12,6 +12,7 @@
 			</intent-filter>
 		</activity>
 		<receiver android:name="SleepAlarmReceiver" android:process=":remote" />
+		<receiver android:name="UnsleepAlarmReceiver" android:process=":remote" />
 		<activity android:name=".Chooser" android:label="@string/app_name"
 			android:launchMode="singleTask">
 		</activity>
