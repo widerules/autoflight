@@ -8,7 +8,7 @@ import android.media.RingtoneManager;
 import android.os.Vibrator;
 
 /**
- * Intent permettant d'afficher le fait que le téléphone va passer en mode avion
+ * Intent permettant d'afficher le fait que le tÃ©lÃ©phone va passer en mode avion
  * @author lolo
  *
  */
@@ -31,7 +31,7 @@ public class SleepAlarmReceiver extends BroadcastReceiver {
 		Ringtone ringtone = RingtoneManager.getRingtone(context, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
 		ringtone.play();
 		
-		// et on envoit la sauce à l'autre intent
+		// et on envoit la sauce Ã  l'autre intent
 		context.startActivity(notificationIntent);
 	}
 	
