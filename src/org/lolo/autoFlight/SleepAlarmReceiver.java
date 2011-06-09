@@ -34,5 +34,4 @@ public class SleepAlarmReceiver extends BroadcastReceiver {
 		// et on envoit la sauce à l'autre intent
 		context.startActivity(notificationIntent);
 	}
-	
 }
