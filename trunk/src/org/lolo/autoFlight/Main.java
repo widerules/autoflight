@@ -1,20 +1,28 @@
 package org.lolo.autoFlight;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+
+import org.lolo.autoFlight.bean.Conf;
+import org.lolo.autoFlight.listview.ConfAdapter;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 /**
  * Main permettant de setter l'heure à laquelle on va demander si le téléphone
@@ -24,73 +32,177 @@ import android.widget.Toast;
  * 
  */
 public class Main extends Activity {
+
+	/** The start calendar */
+	private Calendar startCal;
+	/** The ending calendar */
+	private Calendar endCal;
+
 	/** Called when the activity is first created. */
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-
-		final TimePicker tp = (TimePicker) findViewById(R.id.tpFlightTime);
-		tp.setIs24HourView(Boolean.TRUE);
-		final TimePicker tpFinalHour = (TimePicker) findViewById(R.id.tpFlightOutTime);
-		tpFinalHour.setIs24HourView(Boolean.TRUE);
-		final CheckBox chkEndTime = (CheckBox) findViewById(R.id.chkEndTime);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
 
 		// on récupère l'heure actuelle stockée (ou pas)
 		final SharedPreferences sp = getSharedPreferences("autoFlight",
 				Activity.MODE_WORLD_WRITEABLE);
-		
-		initTimePicker();
-		
-        // 
-        Button btnSave = (Button) findViewById(R.id.btnSavePref);
-        btnSave.setOnClickListener(new OnClickListener() {
-			
+
+		final ListView lv = (ListView) findViewById(R.id.listViewConf);
+		final ConfAdapter adapter = new ConfAdapter(this,
+				R.layout.item_conf, new ArrayList<Conf>());
+
+		final CheckBox chkActivate = (CheckBox) findViewById(R.id.chkActivate);
+		chkActivate.setChecked(Boolean.parseBoolean(sp.getString("chkActivate",
+				"true")));
+		chkActivate.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
+				Editor edit = sp.edit();
+				edit.putString("chkActivate",
+						Boolean.toString(((CheckBox) v).isChecked()));
+				edit.apply();
+
+				adapter.setEnabled(((CheckBox) v).isChecked());
+				adapter.notifyDataSetChanged();
 				
-				String toastMsg = "";
-				
-				Integer hour = tp.getCurrentHour();
-				Integer min = tp.getCurrentMinute();
-				Calendar cal = Calendar.getInstance();
-				
-				if (hour < cal.get(Calendar.HOUR_OF_DAY) || (hour == cal.get(Calendar.HOUR_OF_DAY) && min < cal.get(Calendar.MINUTE))) {
-					cal.roll(Calendar.DAY_OF_MONTH, 1);
+				if (!((CheckBox) v).isChecked()) {
+					
+					// On annule l'alarm pour replanifier si besoin
+					removeAlarm(SleepAlarmReceiver.class);
+					removeAlarm(UnsleepAlarmReceiver.class);
+				} else {
+					initAskerInTime();
 				}
-				cal.set(Calendar.HOUR_OF_DAY, hour.intValue());
-				cal.set(Calendar.MINUTE, min.intValue());
-				cal.set(Calendar.SECOND, 0);
-				
-				sp.edit().putString("hour", "" + cal.getTimeInMillis()).commit();
-				
-				toastMsg += "Entrée Mode Avion: " + hour + ":" + min;
-				
-				if (chkEndTime.isChecked()) {
-					Integer hourOut = tpFinalHour.getCurrentHour();
-					Integer minOut = tpFinalHour.getCurrentMinute();
-					Calendar calOut = Calendar.getInstance();
-					
-					if (hourOut < calOut.get(Calendar.HOUR_OF_DAY) || (hourOut == calOut.get(Calendar.HOUR_OF_DAY) && minOut < calOut.get(Calendar.MINUTE))) {
-						calOut.roll(Calendar.DAY_OF_MONTH, 1);
-					}
-					calOut.set(Calendar.HOUR_OF_DAY, hourOut.intValue());
-					calOut.set(Calendar.MINUTE, minOut.intValue());
-					calOut.set(Calendar.SECOND, 0);
-					
-					sp.edit().putString("hourOut", "" + calOut.getTimeInMillis()).commit();
-					
-					toastMsg += "\nSortie Mode Avion: " + hourOut + ":" + minOut;
-				}
-				
-				Toast.makeText(Main.this, toastMsg, Toast.LENGTH_LONG).show();
-				
-		        initAskerInTime();
 			}
 		});
-        
-        initAskerInTime();
-    }
+
+		initTimePicker();
+
+		adapter.add(new Conf(getResources().getString(R.string.txtBeginDate),
+				startCal, R.drawable.ic_dialog_time) {
+			@Override
+			public void launchAction() {
+
+				final Dialog dialog = new Dialog(Main.this);
+				dialog.setContentView(R.layout.dialog_time);
+				dialog.setTitle(this.getLabel());
+
+				// ouverture de la dialog permettant de choisir l'heure de début
+				final TimePicker tp = (TimePicker) dialog
+						.findViewById(R.id.tpTime);
+				tp.setIs24HourView(Boolean.TRUE);
+				tp.setCurrentHour(startCal.get(Calendar.HOUR_OF_DAY));
+				tp.setCurrentMinute(startCal.get(Calendar.MINUTE));
+				// set du bouton ok
+				Button ok = (Button) dialog.findViewById(R.id.btnConfOk);
+				ok.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Integer hour = tp.getCurrentHour();
+						Integer min = tp.getCurrentMinute();
+						Calendar cal = Calendar.getInstance();
+
+						if (hour < cal.get(Calendar.HOUR_OF_DAY)
+								|| (hour == cal.get(Calendar.HOUR_OF_DAY) && min < cal
+										.get(Calendar.MINUTE))) {
+							cal.roll(Calendar.DAY_OF_MONTH, 1);
+						}
+						cal.set(Calendar.HOUR_OF_DAY, hour.intValue());
+						cal.set(Calendar.MINUTE, min.intValue());
+						cal.set(Calendar.SECOND, 0);
+
+						setValue(cal);
+
+						sp.edit().putString("hour", "" + cal.getTimeInMillis())
+								.commit();
+						initAskerInTime();
+						dialog.dismiss();
+
+						adapter.notifyDataSetChanged();
+					}
+				});
+				Button cancel = (Button) dialog
+						.findViewById(R.id.btnConfCancel);
+				cancel.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						dialog.dismiss();
+					}
+				});
+				dialog.show();
+			}
+		});
+		adapter.add(new Conf(getResources().getString(R.string.txtEndDate),
+				endCal, R.drawable.ic_dialog_time) {
+			@Override
+			public void launchAction() {
+
+				final Dialog dialog = new Dialog(Main.this);
+				dialog.setContentView(R.layout.dialog_time);
+				dialog.setTitle(this.getLabel());
+
+				// ouverture de la dialog permettant de choisir l'heure de début
+				final TimePicker tp = (TimePicker) dialog
+						.findViewById(R.id.tpTime);
+				tp.setIs24HourView(Boolean.TRUE);
+				tp.setCurrentHour(endCal.get(Calendar.HOUR_OF_DAY));
+				tp.setCurrentMinute(endCal.get(Calendar.MINUTE));
+				// set du bouton ok
+				Button ok = (Button) dialog.findViewById(R.id.btnConfOk);
+				ok.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Integer hour = tp.getCurrentHour();
+						Integer min = tp.getCurrentMinute();
+						Calendar cal = Calendar.getInstance();
+
+						if (hour < cal.get(Calendar.HOUR_OF_DAY)
+								|| (hour == cal.get(Calendar.HOUR_OF_DAY) && min < cal
+										.get(Calendar.MINUTE))) {
+							cal.roll(Calendar.DAY_OF_MONTH, 1);
+						}
+						cal.set(Calendar.HOUR_OF_DAY, hour.intValue());
+						cal.set(Calendar.MINUTE, min.intValue());
+						cal.set(Calendar.SECOND, 0);
+
+						setValue(cal);
+
+						sp.edit()
+								.putString("hourOut",
+										"" + cal.getTimeInMillis()).commit();
+						initAskerInTime();
+						dialog.dismiss();
+
+						adapter.notifyDataSetChanged();
+					}
+				});
+				Button cancel = (Button) dialog
+						.findViewById(R.id.btnConfCancel);
+				cancel.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						dialog.dismiss();
+					}
+				});
+				dialog.show();
+			}
+		});
+		lv.setAdapter(adapter);
+
+		lv.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Conf c = adapter.getItem(position);
+				c.launchAction();
+			}
+		});
+
+		initAskerInTime();
+	}
 
 	/**
 	 * Initialisation du timepicker avec l'heure qui a déjà été saisie... ou pas
@@ -103,53 +215,45 @@ public class Main extends Activity {
 		String hour = sp.getString("hour", "");
 		String hourOut = sp.getString("hourOut", "");
 
-		Calendar cal = Calendar.getInstance();
-		Calendar calOut = Calendar.getInstance();
+		startCal = Calendar.getInstance();
+		endCal = Calendar.getInstance();
 
-		final CheckBox chkEndTime = (CheckBox) findViewById(R.id.chkEndTime);
 		if ("".equals(hour)) {
-			cal.roll(Calendar.DAY_OF_MONTH, 1);
-			cal.set(Calendar.HOUR_OF_DAY, 0);
-			cal.set(Calendar.MINUTE, 0);
+			startCal.roll(Calendar.DAY_OF_MONTH, 1);
+			startCal.set(Calendar.HOUR_OF_DAY, 0);
+			startCal.set(Calendar.MINUTE, 0);
 		} else {
 			Long hourInMillis = Long.valueOf(hour);
 			Calendar savedTime = Calendar.getInstance();
 			savedTime.setTimeInMillis(hourInMillis);
-			
-			cal.set(Calendar.HOUR_OF_DAY, savedTime.get(Calendar.HOUR_OF_DAY));
-			cal.set(Calendar.MINUTE, savedTime.get(Calendar.MINUTE));
-			
-			if (cal.getTimeInMillis() < Calendar.getInstance().getTimeInMillis()) {
-				cal.roll(Calendar.DAY_OF_MONTH, 1);
+
+			startCal.set(Calendar.HOUR_OF_DAY,
+					savedTime.get(Calendar.HOUR_OF_DAY));
+			startCal.set(Calendar.MINUTE, savedTime.get(Calendar.MINUTE));
+
+			if (startCal.getTimeInMillis() < Calendar.getInstance()
+					.getTimeInMillis()) {
+				startCal.roll(Calendar.DAY_OF_MONTH, 1);
 			}
 		}
 		if ("".equals(hourOut)) {
-			calOut.roll(Calendar.DAY_OF_MONTH, 1);
-			calOut.set(Calendar.HOUR_OF_DAY, 0);
-			calOut.set(Calendar.MINUTE, 0);
-			// et on décoche la checkbox
-			chkEndTime.setChecked(Boolean.FALSE);
+			endCal.roll(Calendar.DAY_OF_MONTH, 1);
+			endCal.set(Calendar.HOUR_OF_DAY, 0);
+			endCal.set(Calendar.MINUTE, 0);
 		} else {
 			Long hourInMillis = Long.valueOf(hourOut);
 			Calendar savedTime = Calendar.getInstance();
 			savedTime.setTimeInMillis(hourInMillis);
-			
-			calOut.set(Calendar.HOUR_OF_DAY, savedTime.get(Calendar.HOUR_OF_DAY));
-			calOut.set(Calendar.MINUTE, savedTime.get(Calendar.MINUTE));
-			
-			if (calOut.getTimeInMillis() < Calendar.getInstance().getTimeInMillis()) {
-				calOut.roll(Calendar.DAY_OF_MONTH, 1);
+
+			endCal.set(Calendar.HOUR_OF_DAY,
+					savedTime.get(Calendar.HOUR_OF_DAY));
+			endCal.set(Calendar.MINUTE, savedTime.get(Calendar.MINUTE));
+
+			if (endCal.getTimeInMillis() < Calendar.getInstance()
+					.getTimeInMillis()) {
+				endCal.roll(Calendar.DAY_OF_MONTH, 1);
 			}
-			chkEndTime.setChecked(Boolean.TRUE);
 		}
-
-		final TimePicker tp = (TimePicker) findViewById(R.id.tpFlightTime);
-		tp.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
-		tp.setCurrentMinute(cal.get(Calendar.MINUTE));
-
-		final TimePicker tpOut = (TimePicker) findViewById(R.id.tpFlightOutTime);
-		tpOut.setCurrentHour(calOut.get(Calendar.HOUR_OF_DAY));
-		tpOut.setCurrentMinute(calOut.get(Calendar.MINUTE));
 	}
 
 	/**
@@ -164,48 +268,47 @@ public class Main extends Activity {
 		String hourOut = sp.getString("hourOut", "");
 
 		// a-t-on déjà configuré l'heure du mode avion
-		if ("".equals(hour)) {
-			Calendar tomorrow = Calendar.getInstance();
-			tomorrow.roll(Calendar.DAY_OF_MONTH, 1);
-			tomorrow.set(Calendar.HOUR_OF_DAY, 0);
-			tomorrow.set(Calendar.MINUTE, 0);
-			
-			hour = "" + tomorrow.getTimeInMillis();
+		if (!"".equals(hour)) {
+			Long hourInMillis = Long.valueOf(hour);
+			// on regarde si l'heure est avant maintenant ou pas dans quel cas
+			// on
+			// pousse d'un jour
+			if (hourInMillis < Calendar.getInstance().getTimeInMillis()) {
+				Calendar alarmHour = Calendar.getInstance();
+				alarmHour.setTimeInMillis(hourInMillis);
+				alarmHour.set(Calendar.DAY_OF_MONTH, Calendar.getInstance()
+						.get(Calendar.DAY_OF_MONTH) + 1);
+				alarmHour.set(Calendar.MONTH,
+						Calendar.getInstance().get(Calendar.MONTH));
+
+				hourInMillis = alarmHour.getTimeInMillis();
+			}
+			setAlarm(hourInMillis, SleepAlarmReceiver.class);
 		}
 
-		Long hourInMillis = Long.valueOf(hour);
-		// on regarde si l'heure est avant maintenant ou pas dans quel cas on 
-		// pousse d'un jour
-		if (hourInMillis < Calendar.getInstance().getTimeInMillis()) {
-			Calendar alarmHour = Calendar.getInstance();
-			alarmHour.setTimeInMillis(hourInMillis);
-			alarmHour.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + 1);
-			alarmHour.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH));
-			
-			hourInMillis = alarmHour.getTimeInMillis();
-		}
-		setAlarm(hourInMillis, SleepAlarmReceiver.class);
-		
 		// s'il n'y a pas d'heure de out flight, on ne sette rien
 		if (!"".equals(hourOut)) {
 
 			Long hourOutInMillis = Long.valueOf(hourOut);
-			// on regarde si l'heure est avant maintenant ou pas dans quel cas on 
-			// pousse d'un jour
+			// on regarde si l'heure est avant maintenant ou pas dans quel cas
+			// on pousse d'un jour
 			if (hourOutInMillis < Calendar.getInstance().getTimeInMillis()) {
 				Calendar alarmHour = Calendar.getInstance();
-				alarmHour.setTimeInMillis(hourInMillis);
-				alarmHour.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + 1);
-				alarmHour.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH));
-				
+				alarmHour.setTimeInMillis(hourOutInMillis);
+				alarmHour.set(Calendar.DAY_OF_MONTH, Calendar.getInstance()
+						.get(Calendar.DAY_OF_MONTH) + 1);
+				alarmHour.set(Calendar.MONTH,
+						Calendar.getInstance().get(Calendar.MONTH));
+
 				hourOutInMillis = alarmHour.getTimeInMillis();
 			}
 			setAlarm(hourOutInMillis, UnsleepAlarmReceiver.class);
 		}
 	}
-	
+
 	/**
 	 * Sette une alarme et la classe associé
+	 * 
 	 * @param time Temps en millis
 	 * @param classToLaunch La classe à lancer lors de réveil
 	 */
@@ -223,7 +326,7 @@ public class Main extends Activity {
 				intent, 0);
 
 		// On annule l'alarm pour replanifier si besoin
-		am.cancel(pendingintent);
+		removeAlarm(classToLaunch);
 
 		// ok maintenant, on va faire la différence entre l'heure actuelle et
 		// celle choisie
@@ -232,5 +335,24 @@ public class Main extends Activity {
 		// On ajoute le reveil au service de l'AlarmManager
 		am.setRepeating(AlarmManager.RTC_WAKEUP, time,
 				AlarmManager.INTERVAL_DAY, pendingintent);
+	}
+	
+	/**
+	 * Désactive une alarme déjà setté
+	 */
+	private void removeAlarm(Class<?> classToLaunch) {
+
+		// Récupération de l'instance du service AlarmManager.
+		AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+		// On instancie l'Intent qui va être appelé au moment du reveil.
+		Intent intent = new Intent(this, classToLaunch);
+
+		// On créer le pending Intent qui identifie l'Intent de reveil avec un
+		// ID et un/des flag(s)
+		PendingIntent pendingintent = PendingIntent.getBroadcast(this, 0,
+				intent, 0);
+		// On annule l'alarm pour replanifier si besoin
+		am.cancel(pendingintent);
 	}
 }

@@ -6,6 +6,9 @@
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <string name="bigTitle">Configuration</string>
-    <string name="txtBeginDate">Heure d\'entrée en mode avion</string>
-    <string name="txtEndDate">Heure de sortie du mode avion</string>
+    <string name="txtActivate">Activer</string>
+    <string name="txtBeginDate">Entrée en mode avion</string>
+    <string name="txtEndDate">Sortie du mode avion</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Annuler</string>
 </resources>
