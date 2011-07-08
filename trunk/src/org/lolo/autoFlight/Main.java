@@ -107,7 +107,7 @@ public class Main extends Activity {
 						if (hour < cal.get(Calendar.HOUR_OF_DAY)
 								|| (hour == cal.get(Calendar.HOUR_OF_DAY) && min < cal
 										.get(Calendar.MINUTE))) {
-							cal.roll(Calendar.DAY_OF_MONTH, 1);
+							cal.add(Calendar.DAY_OF_MONTH, 1);
 						}
 						cal.set(Calendar.HOUR_OF_DAY, hour.intValue());
 						cal.set(Calendar.MINUTE, min.intValue());
@@ -161,7 +161,7 @@ public class Main extends Activity {
 						if (hour < cal.get(Calendar.HOUR_OF_DAY)
 								|| (hour == cal.get(Calendar.HOUR_OF_DAY) && min < cal
 										.get(Calendar.MINUTE))) {
-							cal.roll(Calendar.DAY_OF_MONTH, 1);
+							cal.add(Calendar.DAY_OF_MONTH, 1);
 						}
 						cal.set(Calendar.HOUR_OF_DAY, hour.intValue());
 						cal.set(Calendar.MINUTE, min.intValue());
@@ -219,7 +219,7 @@ public class Main extends Activity {
 		endCal = Calendar.getInstance();
 
 		if ("".equals(hour)) {
-			startCal.roll(Calendar.DAY_OF_MONTH, 1);
+			startCal.add(Calendar.DAY_OF_MONTH, 1);
 			startCal.set(Calendar.HOUR_OF_DAY, 0);
 			startCal.set(Calendar.MINUTE, 0);
 		} else {
@@ -233,11 +233,11 @@ public class Main extends Activity {
 
 			if (startCal.getTimeInMillis() < Calendar.getInstance()
 					.getTimeInMillis()) {
-				startCal.roll(Calendar.DAY_OF_MONTH, 1);
+				startCal.add(Calendar.DAY_OF_MONTH, 1);
 			}
 		}
 		if ("".equals(hourOut)) {
-			endCal.roll(Calendar.DAY_OF_MONTH, 1);
+			endCal.add(Calendar.DAY_OF_MONTH, 1);
 			endCal.set(Calendar.HOUR_OF_DAY, 0);
 			endCal.set(Calendar.MINUTE, 0);
 		} else {
@@ -251,7 +251,7 @@ public class Main extends Activity {
 
 			if (endCal.getTimeInMillis() < Calendar.getInstance()
 					.getTimeInMillis()) {
-				endCal.roll(Calendar.DAY_OF_MONTH, 1);
+				endCal.add(Calendar.DAY_OF_MONTH, 1);
 			}
 		}
 	}
