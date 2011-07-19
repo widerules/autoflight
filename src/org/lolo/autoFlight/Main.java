@@ -57,8 +57,8 @@ public class Main extends Activity {
 				Activity.MODE_WORLD_WRITEABLE);
 
 		final ListView lv = (ListView) findViewById(R.id.listViewConf);
-		final ConfAdapter adapter = new ConfAdapter(this,
-				R.layout.item_conf, new ArrayList<Conf>());
+		final ConfAdapter adapter = new ConfAdapter(this, R.layout.item_conf,
+				new ArrayList<Conf>());
 
 		final CheckBox chkActivate = (CheckBox) findViewById(R.id.chkActivate);
 		chkActivate.setChecked(Boolean.parseBoolean(sp.getString("chkActivate",
@@ -74,9 +74,9 @@ public class Main extends Activity {
 
 				adapter.setEnabled(((CheckBox) v).isChecked());
 				adapter.notifyDataSetChanged();
-				
+
 				if (!((CheckBox) v).isChecked()) {
-					
+
 					// On annule l'alarm pour replanifier si besoin
 					removeAlarm(SleepAlarmReceiver.class);
 					removeAlarm(UnsleepAlarmReceiver.class);
@@ -210,30 +210,35 @@ public class Main extends Activity {
 		});
 
 		initAskerInTime();
-		
+
 		initAds();
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.about, menu);
-	    return true;
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu, menu);
+		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle item selection
-	    switch (item.getItemId()) {
-	    case R.id.about:
-	    	Intent intent = new Intent(Main.this, About.class);
-	    	startActivity(intent);
-	        return true;
-	    default:
-	        return super.onOptionsItemSelected(item);
-	    }
+		Intent intent = null;
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.about:
+			intent = new Intent(Main.this, About.class);
+			startActivity(intent);
+			return true;
+		case R.id.config:
+			intent = new Intent(Main.this, Config.class);
+			startActivity(intent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
-	
+
 	/**
 	 * Création de la zone de pub
 	 */
@@ -242,17 +247,17 @@ public class Main extends Activity {
 		// mise en place de l'AdMod
 		LinearLayout adLayout = (LinearLayout) findViewById(R.id.adlayout);
 		// Create the adView
-	    // Please replace MY_BANNER_UNIT_ID with your AdMob Publisher ID
-	    AdView adView = new AdView(this, AdSize.BANNER, "a14e24400b86401");
-	  
-	    // Add the adView to it
-	    adLayout.addView(adView);
-	     
-	    // Initiate a generic request to load it with an ad
-	    AdRequest request = new AdRequest();
-	    request.setTesting(true);
+		// Please replace MY_BANNER_UNIT_ID with your AdMob Publisher ID
+		final AdView adView = new AdView(this, AdSize.BANNER, "a14e24400b86401");
 
-	    adView.loadAd(request);  
+		// Add the adView to it
+		adLayout.addView(adView);
+
+		// Initiate a generic request to load it with an ad
+		final AdRequest request = new AdRequest();
+
+		adView.loadAd(request);
+
 	}
 
 	/**
@@ -387,7 +392,7 @@ public class Main extends Activity {
 		am.setRepeating(AlarmManager.RTC_WAKEUP, time,
 				AlarmManager.INTERVAL_DAY, pendingintent);
 	}
-	
+
 	/**
 	 * Désactive une alarme déjà setté
 	 */
