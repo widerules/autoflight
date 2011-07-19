@@ -12,7 +12,7 @@
 			android:layout_width="fill_parent" android:text="pouet" android:id="@+id/txtConf"
 			android:textSize="20dip" android:textColor="#FFF"/>
 
-		<TextView android:layout_height="match_parent"
+		<TextView android:layout_height="fill_parent"
 			android:layout_width="fill_parent" android:text="Test" android:id="@+id/txtConfValue"
 			android:textSize="15dip"  android:gravity="center_vertical"
 			android:textStyle="italic"/>

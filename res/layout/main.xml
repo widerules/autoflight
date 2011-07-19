@@ -13,6 +13,8 @@
 		android:gravity="center_vertical" android:text="@string/txtActivate">
 	</CheckBox>
 	<ListView android:id="@+id/listViewConf"
-		android:layout_height="fill_parent" android:layout_width="match_parent">
+		android:layout_height="wrap_content" android:layout_width="fill_parent">
 	</ListView>
+	<LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:id="@+id/adlayout" android:gravity="bottom"/>
 </LinearLayout>

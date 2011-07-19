@@ -15,14 +15,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TimePicker;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
 
 /**
  * Main permettant de setter l'heure à laquelle on va demander si le téléphone
@@ -62,7 +70,7 @@ public class Main extends Activity {
 				Editor edit = sp.edit();
 				edit.putString("chkActivate",
 						Boolean.toString(((CheckBox) v).isChecked()));
-				edit.apply();
+				edit.commit();
 
 				adapter.setEnabled(((CheckBox) v).isChecked());
 				adapter.notifyDataSetChanged();
@@ -202,6 +210,49 @@ public class Main extends Activity {
 		});
 
 		initAskerInTime();
+		
+		initAds();
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.about, menu);
+	    return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	    case R.id.about:
+	    	Intent intent = new Intent(Main.this, About.class);
+	    	startActivity(intent);
+	        return true;
+	    default:
+	        return super.onOptionsItemSelected(item);
+	    }
+	}
+	
+	/**
+	 * Création de la zone de pub
+	 */
+	private void initAds() {
+
+		// mise en place de l'AdMod
+		LinearLayout adLayout = (LinearLayout) findViewById(R.id.adlayout);
+		// Create the adView
+	    // Please replace MY_BANNER_UNIT_ID with your AdMob Publisher ID
+	    AdView adView = new AdView(this, AdSize.BANNER, "a14e24400b86401");
+	  
+	    // Add the adView to it
+	    adLayout.addView(adView);
+	     
+	    // Initiate a generic request to load it with an ad
+	    AdRequest request = new AdRequest();
+	    request.setTesting(true);
+
+	    adView.loadAd(request);  
 	}
 
 	/**
