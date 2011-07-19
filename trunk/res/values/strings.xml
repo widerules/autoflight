@@ -11,4 +11,6 @@
     <string name="txtEndDate">Sortie du mode avion</string>
     <string name="ok">Ok</string>
     <string name="cancel">Annuler</string>
+    <string name="about">A propos</string>
+    <string name="copyright">© Copyright Adelya</string>
 </resources>
