@@ -13,4 +13,7 @@
     <string name="cancel">Annuler</string>
     <string name="about">A propos</string>
     <string name="copyright">© Copyright Adelya</string>
+    <string name="configuration">Configurer</string>
+    <string name="soundConf">Activer le son</string>
+    <string name="vibrateConf">Activer la vibration</string>
 </resources>
