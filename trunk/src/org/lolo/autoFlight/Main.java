@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 import org.lolo.autoFlight.bean.Conf;
 import org.lolo.autoFlight.listview.ConfAdapter;
+import org.lolo.autoFlight.util.AdelyaUtil;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -12,8 +13,6 @@ import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,48 +44,73 @@ public class Main extends Activity {
 	private Calendar startCal;
 	/** The ending calendar */
 	private Calendar endCal;
-
+	/** THE list */
+	private ListView lv;
+	/** The adapter that manipulate the listView that contains hours  */
+	private ConfAdapter adapter;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		// on récupère l'heure actuelle stockée (ou pas)
-		final SharedPreferences sp = getSharedPreferences("autoFlight",
-				Activity.MODE_WORLD_WRITEABLE);
-
-		final ListView lv = (ListView) findViewById(R.id.listViewConf);
-		final ConfAdapter adapter = new ConfAdapter(this, R.layout.item_conf,
+		lv = (ListView) findViewById(R.id.listViewConf);
+		adapter = new ConfAdapter(this, R.layout.item_conf,
 				new ArrayList<Conf>());
 
 		final CheckBox chkActivate = (CheckBox) findViewById(R.id.chkActivate);
-		chkActivate.setChecked(Boolean.parseBoolean(sp.getString("chkActivate",
-				"true")));
+		chkActivate.setChecked(Boolean.parseBoolean(AdelyaUtil.getPreferences(
+				Main.this, "chkActivate", "true")));
 		chkActivate.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Editor edit = sp.edit();
-				edit.putString("chkActivate",
+
+				AdelyaUtil.setPreferences(Main.this, "chkActivate",
 						Boolean.toString(((CheckBox) v).isChecked()));
-				edit.commit();
 
-				adapter.setEnabled(((CheckBox) v).isChecked());
-				adapter.notifyDataSetChanged();
-
-				if (!((CheckBox) v).isChecked()) {
-
-					// On annule l'alarm pour replanifier si besoin
-					removeAlarm(SleepAlarmReceiver.class);
-					removeAlarm(UnsleepAlarmReceiver.class);
-				} else {
-					initAskerInTime();
-				}
+				toggleOptions(((CheckBox) v).isChecked());
 			}
 		});
 
 		initTimePicker();
+		
+		initAdapter();
+
+		toggleOptions(Boolean.parseBoolean(AdelyaUtil.getPreferences(Main.this, "chkActivate", "true")));
+		
+		initAskerInTime();
+
+		initAds();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent = null;
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.about:
+			intent = new Intent(Main.this, About.class);
+			startActivity(intent);
+			return true;
+		case R.id.config:
+			intent = new Intent(Main.this, Config.class);
+			startActivity(intent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	private void initAdapter() {
 
 		adapter.add(new Conf(getResources().getString(R.string.txtBeginDate),
 				startCal, R.drawable.ic_dialog_time) {
@@ -123,8 +147,9 @@ public class Main extends Activity {
 
 						setValue(cal);
 
-						sp.edit().putString("hour", "" + cal.getTimeInMillis())
-								.commit();
+						AdelyaUtil.setPreferences(Main.this, "hour",
+								"" + cal.getTimeInMillis());
+
 						initAskerInTime();
 						dialog.dismiss();
 
@@ -177,9 +202,9 @@ public class Main extends Activity {
 
 						setValue(cal);
 
-						sp.edit()
-								.putString("hourOut",
-										"" + cal.getTimeInMillis()).commit();
+						AdelyaUtil.setPreferences(Main.this, "hourOut", ""
+								+ cal.getTimeInMillis());
+						
 						initAskerInTime();
 						dialog.dismiss();
 
@@ -208,35 +233,6 @@ public class Main extends Activity {
 				c.launchAction();
 			}
 		});
-
-		initAskerInTime();
-
-		initAds();
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		Intent intent = null;
-		// Handle item selection
-		switch (item.getItemId()) {
-		case R.id.about:
-			intent = new Intent(Main.this, About.class);
-			startActivity(intent);
-			return true;
-		case R.id.config:
-			intent = new Intent(Main.this, Config.class);
-			startActivity(intent);
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
 	}
 
 	/**
@@ -264,12 +260,9 @@ public class Main extends Activity {
 	 * Initialisation du timepicker avec l'heure qui a déjà été saisie... ou pas
 	 */
 	private void initTimePicker() {
-		// on récupère l'heure actuelle stockée (ou pas)
-		SharedPreferences sp = getSharedPreferences("autoFlight",
-				Activity.MODE_WORLD_WRITEABLE);
 		// et voici l'heure... En timmeInMillis of course
-		String hour = sp.getString("hour", "");
-		String hourOut = sp.getString("hourOut", "");
+		String hour = AdelyaUtil.getPreferences(Main.this, "hour", "");
+		String hourOut = AdelyaUtil.getPreferences(Main.this, "hourOut", "");
 
 		startCal = Calendar.getInstance();
 		endCal = Calendar.getInstance();
@@ -316,12 +309,9 @@ public class Main extends Activity {
 	 * Initialisation de l'alarme du mode avion
 	 */
 	private void initAskerInTime() {
-		// on récupèe l'heure actuelle stockée (ou pas)
-		SharedPreferences sp = getSharedPreferences("autoFlight",
-				Activity.MODE_WORLD_WRITEABLE);
 		// et voici l'heure... En timmeInMillis of course
-		String hour = sp.getString("hour", "");
-		String hourOut = sp.getString("hourOut", "");
+		String hour = AdelyaUtil.getPreferences(Main.this, "hour", "");
+		String hourOut = AdelyaUtil.getPreferences(Main.this, "hourOut", "");
 
 		// a-t-on déjà configuré l'heure du mode avion
 		if (!"".equals(hour)) {
@@ -410,5 +400,23 @@ public class Main extends Activity {
 				intent, 0);
 		// On annule l'alarm pour replanifier si besoin
 		am.cancel(pendingintent);
+	}
+	
+	/**
+	 * Deactivate / activate options
+	 */
+	private void toggleOptions(Boolean isChecked) {
+
+		adapter.setEnabled(isChecked);
+		adapter.notifyDataSetChanged();
+
+		if (!isChecked) {
+
+			// On annule l'alarm pour replanifier si besoin
+			removeAlarm(SleepAlarmReceiver.class);
+			removeAlarm(UnsleepAlarmReceiver.class);
+		} else {
+			initAskerInTime();
+		}
 	}
 }
