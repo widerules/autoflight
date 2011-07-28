@@ -61,7 +61,7 @@ public class Main extends Activity {
 
 		final CheckBox chkActivate = (CheckBox) findViewById(R.id.chkActivate);
 		chkActivate.setChecked(Boolean.parseBoolean(AdelyaUtil.getPreferences(
-				Main.this, "chkActivate", "true")));
+				Main.this, "chkActivate", "false")));
 		chkActivate.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -269,7 +269,7 @@ public class Main extends Activity {
 
 		if ("".equals(hour)) {
 			startCal.add(Calendar.DAY_OF_MONTH, 1);
-			startCal.set(Calendar.HOUR_OF_DAY, 0);
+			startCal.set(Calendar.HOUR_OF_DAY, 23);
 			startCal.set(Calendar.MINUTE, 0);
 		} else {
 			Long hourInMillis = Long.valueOf(hour);
@@ -280,14 +280,14 @@ public class Main extends Activity {
 					savedTime.get(Calendar.HOUR_OF_DAY));
 			startCal.set(Calendar.MINUTE, savedTime.get(Calendar.MINUTE));
 
-			if (startCal.getTimeInMillis() < Calendar.getInstance()
+			while (startCal.getTimeInMillis() < Calendar.getInstance()
 					.getTimeInMillis()) {
 				startCal.add(Calendar.DAY_OF_MONTH, 1);
 			}
 		}
 		if ("".equals(hourOut)) {
 			endCal.add(Calendar.DAY_OF_MONTH, 1);
-			endCal.set(Calendar.HOUR_OF_DAY, 0);
+			endCal.set(Calendar.HOUR_OF_DAY, 6);
 			endCal.set(Calendar.MINUTE, 0);
 		} else {
 			Long hourInMillis = Long.valueOf(hourOut);
@@ -298,7 +298,7 @@ public class Main extends Activity {
 					savedTime.get(Calendar.HOUR_OF_DAY));
 			endCal.set(Calendar.MINUTE, savedTime.get(Calendar.MINUTE));
 
-			if (endCal.getTimeInMillis() < Calendar.getInstance()
+			while (endCal.getTimeInMillis() < Calendar.getInstance()
 					.getTimeInMillis()) {
 				endCal.add(Calendar.DAY_OF_MONTH, 1);
 			}
