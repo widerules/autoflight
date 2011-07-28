@@ -5,44 +5,47 @@
 	<uses-sdk android:minSdkVersion="7" />
 
 	<application android:icon="@drawable/icon" android:label="@string/app_name">
-		<activity android:name=".Main" android:label="@string/app_name" android:theme="@android:style/Theme.Black.NoTitleBar">
+		<activity android:name=".Main" android:label="@string/app_name"
+			android:theme="@android:style/Theme.Black.NoTitleBar"
+			android:screenOrientation="portrait">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".Chooser" android:label="@string/app_name" 
+		<activity android:name=".Chooser" android:label="@string/app_name"
 			android:launchMode="singleTask" android:theme="@android:style/Theme.Dialog">
 		</activity>
 		<activity android:name=".Wake" android:label="@string/app_name"
 			android:launchMode="singleTask">
 		</activity>
 		<activity android:name="com.google.ads.AdActivity"
-              android:configChanges="keyboard|keyboardHidden|orientation"/>
-              
-		<activity android:name=".About" android:label="@string/app_name" 
-			 android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
-			 android:screenOrientation="portrait"/>
-              
-		<activity android:name=".Config" android:label="@string/app_name" 
+			android:configChanges="keyboard|keyboardHidden|orientation" />
+
+		<activity android:name=".About" android:label="@string/app_name"
+			android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+			android:screenOrientation="portrait" />
+
+		<activity android:name=".Config" android:label="@string/app_name"
 			android:launchMode="singleTask" android:theme="@android:style/Theme.Translucent.NoTitleBar">
 		</activity>
-		
+
 		<receiver android:name="SleepAlarmReceiver" android:process=":remote" />
-		<receiver android:name="UnsleepAlarmReceiver" android:process=":remote" />
+		<receiver android:name="UnsleepAlarmReceiver"
+			android:process=":remote" />
 		<receiver android:name="SleepAlarmBootReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+			</intent-filter>
+		</receiver>
 	</application>
-	
+
 	<meta-data android:value="a14e24400b86401" android:name="ADMOB_PUBLISHER_ID" />
 
 	<uses-permission android:name="android.permission.VIBRATE" />
 	<uses-permission android:name="android.permission.WRITE_SETTINGS" />
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-	<uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 </manifest>

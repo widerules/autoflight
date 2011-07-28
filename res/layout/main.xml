@@ -1,20 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
-	<TextView android:id="@+id/tvBigTitle" android:text="@string/app_name"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:gravity="center_horizontal" android:textSize="22dip" />
-	<View android:layout_width="fill_parent" android:layout_height="1dip"
-		android:layout_marginTop="8dip"
-		android:background="@android:drawable/divider_horizontal_dim_dark" />
-	<CheckBox android:checked="true" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:id="@+id/chkActivate"
-		android:gravity="center_vertical" android:text="@string/txtActivate">
-	</CheckBox>
-	<ListView android:id="@+id/listViewConf"
-		android:layout_height="wrap_content" android:layout_width="fill_parent">
-	</ListView>
-	<LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:id="@+id/adlayout" android:gravity="bottom"/>
-</LinearLayout>
+	android:layout_height="fill_parent" android:background="#FFF">
+	<ImageView android:src="@drawable/zzz" android:layout_width="wrap_content"
+	android:layout_height="wrap_content" android:scaleType="fitEnd" />
+	<RelativeLayout android:orientation="vertical"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:background="@android:drawable/dialog_frame" 
+		
+		>
+		<TextView android:id="@+id/tvBigTitle" android:text="@string/app_name"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:gravity="center_horizontal" android:textSize="22dip" android:layout_alignParentTop="true"/>
+		<TextView android:id="@+id/tvBy" android:text="@string/labs"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:gravity="right" android:textStyle="italic" android:textSize="16dip" 
+			android:paddingRight="5dip"	android:layout_below="@id/tvBigTitle"/>
+		<View android:layout_width="wrap_content" android:layout_height="1dip"
+			android:layout_marginTop="8dip" android:id="@+id/divider"
+			android:background="@android:drawable/divider_horizontal_dim_dark" 
+			android:layout_below="@id/tvBy"/>
+		<LinearLayout android:orientation="horizontal" android:id="@+id/layoutExplication"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_below="@id/divider">
+			<ImageView android:src="@drawable/full_icon"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_marginRight="15dip" />
+			<TextView android:layout_width="fill_parent"
+				android:layout_height="fill_parent" android:text="@string/whatIsIt"
+				android:gravity="center_vertical" />
+		</LinearLayout>
+		<ListView android:id="@+id/listViewConf" android:layout_below="@id/layoutExplication"
+			android:layout_height="wrap_content" android:layout_width="fill_parent">
+		</ListView>
+		<CheckBox android:checked="true" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:id="@+id/chkActivate"
+			android:gravity="center_vertical" android:text="@string/txtActivate"
+			android:layout_below="@id/listViewConf">
+		</CheckBox>
+	</RelativeLayout>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:id="@+id/adlayout"
+		android:gravity="bottom" android:layout_alignParentBottom="true"/>
+</RelativeLayout>

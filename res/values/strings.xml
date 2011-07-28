@@ -2,6 +2,7 @@
 <resources>
     <string name="hello">Hello World, Main!</string>
     <string name="app_name">AutoFlight</string>
+    <string name="labs">by labs.adelya.com</string>
     <string name="question">Voulez-vous passer en mode Avion?</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
@@ -16,4 +17,5 @@
     <string name="configuration">Configurer</string>
     <string name="soundConf">Activer le son</string>
     <string name="vibrateConf">Activer la vibration</string>
+    <string name="whatIsIt">Save battery and sleep quietly with autoflight mode switch.</string>
 </resources>
