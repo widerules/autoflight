@@ -1,11 +1,7 @@
-package org.lolo.autoFlight;
+package com.adelya.autoFlight;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import org.lolo.autoFlight.bean.Conf;
-import org.lolo.autoFlight.listview.ConfAdapter;
-import org.lolo.autoFlight.util.AdelyaUtil;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -27,6 +23,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TimePicker;
 
+import com.adelya.autoFlight.bean.Conf;
+import com.adelya.autoFlight.listview.ConfAdapter;
+import com.adelya.autoFlight.util.AdelyaUtil;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
@@ -153,6 +152,8 @@ public class Main extends Activity {
 						cal.set(Calendar.HOUR_OF_DAY, hour.intValue());
 						cal.set(Calendar.MINUTE, min.intValue());
 						cal.set(Calendar.SECOND, 0);
+						
+						startCal = cal;
 
 						setValue(cal);
 
@@ -208,6 +209,8 @@ public class Main extends Activity {
 						cal.set(Calendar.HOUR_OF_DAY, hour.intValue());
 						cal.set(Calendar.MINUTE, min.intValue());
 						cal.set(Calendar.SECOND, 0);
+						
+						endCal = cal;
 
 						setValue(cal);
 

@@ -1,4 +1,4 @@
-package org.lolo.autoFlight;
+package com.adelya.autoFlight;
 
 import android.app.Activity;
 import android.content.Intent;

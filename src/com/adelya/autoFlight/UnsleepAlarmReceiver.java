@@ -1,6 +1,6 @@
-package org.lolo.autoFlight;
+package com.adelya.autoFlight;
 
-import org.lolo.autoFlight.util.AdelyaUtil;
+import com.adelya.autoFlight.util.AdelyaUtil;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

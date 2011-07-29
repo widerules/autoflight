@@ -1,4 +1,4 @@
-package org.lolo.autoFlight.util;
+package com.adelya.autoFlight.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
