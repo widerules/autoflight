@@ -1,31 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:orientation="vertical" android:gravity="center">
 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:orientation="vertical">
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:orientation="vertical"
-		android:background="@android:drawable/dialog_frame">
-		<LinearLayout android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:orientation="vertical"
-			android:padding="10dip">
-			<CheckBox android:text="@string/soundConf" android:id="@+id/cbSound"
-				android:layout_width="fill_parent" android:layout_height="wrap_content">
-			</CheckBox>
-			<CheckBox android:text="@string/vibrateConf" android:id="@+id/cbVibrate"
-				android:layout_width="wrap_content" android:layout_height="wrap_content">
-			</CheckBox>
-		</LinearLayout>
+		android:padding="10dip">
+		<CheckBox android:text="@string/soundConf" android:id="@+id/cbSound"
+			android:layout_width="fill_parent" android:layout_height="wrap_content">
+		</CheckBox>
+		<CheckBox android:text="@string/vibrateConf" android:id="@+id/cbVibrate"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+		</CheckBox>
+	</LinearLayout>
 
-		<LinearLayout android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:orientation="horizontal"
-			android:background="#999">
-			<Button android:id="@+id/btnConfOk" android:layout_width="0dip"
-				android:layout_height="wrap_content" android:layout_weight="1"
-				android:layout_margin="4dip" android:text="@string/ok" />
-			<Button android:id="@+id/btnConfCancel" android:layout_width="0dip"
-				android:layout_height="wrap_content" android:layout_weight="1"
-				android:layout_margin="4dip" android:text="@string/cancel" />
-		</LinearLayout>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:orientation="horizontal"
+		android:background="#999">
+		<Button android:id="@+id/btnConfOk" android:layout_width="0dip"
+			android:layout_height="wrap_content" android:layout_weight="1"
+			android:layout_margin="4dip" android:text="@string/ok" />
+		<Button android:id="@+id/btnConfCancel" android:layout_width="0dip"
+			android:layout_height="wrap_content" android:layout_weight="1"
+			android:layout_margin="4dip" android:text="@string/cancel" />
 	</LinearLayout>
 </LinearLayout>

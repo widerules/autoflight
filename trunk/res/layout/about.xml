@@ -1,15 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/linearLayout1"
-	android:layout_width="fill_parent" android:layout_height="wrap_content"
-	 xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="#FFF">
+	<ImageView android:src="@drawable/zzz" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:scaleType="fitEnd" />
+	<RelativeLayout android:orientation="vertical"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:background="@android:drawable/dialog_frame">
 
+		<TextView android:id="@+id/tvBigTitle" android:text="@string/about"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:gravity="center_horizontal" android:textSize="22dip" android:layout_alignParentTop="true"/>
+		<TextView android:id="@+id/tvBy" android:text="@string/labs"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:gravity="right" android:textStyle="italic" android:textSize="16dip" 
+			android:paddingRight="5dip"	android:layout_below="@id/tvBigTitle"/>
+		<View android:layout_width="wrap_content" android:layout_height="1dip"
+			android:layout_marginTop="8dip" android:id="@+id/divider"
+			android:background="@android:drawable/divider_horizontal_dim_dark" 
+			android:layout_below="@id/tvBy"/>
+		<TextView android:id="@+id/textExplication"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:text="@string/whatIsIt" android:gravity="center" android:layout_below="@id/divider">
+		</TextView>
+		<LinearLayout android:layout_width="fill_parent"
+			android:id="@+id/layoutAbout"
+			android:layout_height="wrap_content" android:orientation="horizontal"
+			android:paddingBottom="15dip" android:paddingTop="15dip" 
+			android:layout_below="@id/textExplication">
+			<LinearLayout android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:orientation="vertical">
+				<ImageView android:layout_width="wrap_content"
+					android:src="@drawable/logo_adelya" android:id="@+id/imgAdelya"
+					android:layout_height="wrap_content" android:adjustViewBounds="true"
+					android:layout_marginBottom="5dip">
+				</ImageView>
+				<ImageView android:layout_width="wrap_content"
+					android:src="@drawable/logo_la" android:id="@+id/imgLA"
+					android:layout_height="wrap_content" android:adjustViewBounds="true">
+				</ImageView>
+			</LinearLayout>
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="fill_parent" android:orientation="vertical"
+				android:paddingLeft="10dip" android:gravity="center_vertical">
+				<TextView android:layout_width="fill_parent"
+					android:layout_height="wrap_content" android:text="@string/credits" />
+				<TextSwitcher android:id="@+id/textSwitcher1"
+					android:layout_height="wrap_content" android:layout_width="fill_parent">
 
-	<ImageView android:layout_width="wrap_content"  android:src="@drawable/logo_adelya"
-		android:id="@+id/imgAbout" android:layout_height="wrap_content">
-	</ImageView>
-	<TextView android:id="@+id/copyright" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:text="@string/copyright"
-		android:gravity="center">
-	</TextView>
-</LinearLayout>
+					<TextView android:layout_width="fill_parent"
+						android:layout_height="wrap_content" android:text="@string/fullcredits" />
+				</TextSwitcher>
+			</LinearLayout>
+		</LinearLayout>
+		<TextView android:id="@+id/copyright" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:text="@string/copyright"
+			android:gravity="center" android:layout_below="@id/layoutAbout">
+		</TextView>
+	</RelativeLayout>
+</RelativeLayout>
