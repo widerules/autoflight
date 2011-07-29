@@ -21,7 +21,7 @@
     <string name="soundConf">Activer le son</string>
     <string name="vibrateConf">Activer la vibration</string>
     <string name="whatIsIt">Save battery and sleep quietly with autoflight mode switch.</string>
-    <string name="textToShare">Si vous avez un Android et que vous voulez garder votre batterie pendant que vous dormez, téléchargez AutoFlight ! http://sl.adelya.com/vsbol</string>
+    <string name="textToShare">Si vous avez un Android et que vous voulez garder votre batterie pendant que vous dormez, téléchargez AutoFlight ! https://market.android.com/details?id=com.adelya.autoFlight</string>
     <string name="credits"><u>Crédits</u> :</string>
-    <string name="fullcredits">Laurent Gabardos - Adelya Team</string>
+    <string name="fullcredits">Laurent Gabardos\nMathieu Veron\nAdelya Team</string>
 </resources>

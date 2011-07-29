@@ -1,4 +1,4 @@
-package org.lolo.autoFlight.bean;
+package com.adelya.autoFlight.bean;
 
 import java.util.Calendar;
 
