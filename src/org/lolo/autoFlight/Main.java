@@ -46,9 +46,9 @@ public class Main extends Activity {
 	private Calendar endCal;
 	/** THE list */
 	private ListView lv;
-	/** The adapter that manipulate the listView that contains hours  */
+	/** The adapter that manipulate the listView that contains hours */
 	private ConfAdapter adapter;
-	
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -75,11 +75,12 @@ public class Main extends Activity {
 		});
 
 		initTimePicker();
-		
+
 		initAdapter();
 
-		toggleOptions(Boolean.parseBoolean(AdelyaUtil.getPreferences(Main.this, "chkActivate", "true")));
-		
+		toggleOptions(Boolean.parseBoolean(AdelyaUtil.getPreferences(Main.this,
+				"chkActivate", "true")));
+
 		initAskerInTime();
 
 		initAds();
@@ -100,16 +101,24 @@ public class Main extends Activity {
 		case R.id.about:
 			intent = new Intent(Main.this, About.class);
 			startActivity(intent);
+			overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 			return true;
 		case R.id.config:
 			intent = new Intent(Main.this, Config.class);
 			startActivity(intent);
 			return true;
+		case R.id.share:
+			Intent MessIntent = new Intent(Intent.ACTION_SEND);
+			MessIntent.setType("text/plain");
+			MessIntent.putExtra(Intent.EXTRA_TEXT, this.getResources().getString(R.string.textToShare));
+			Main.this.startActivity(Intent.createChooser(MessIntent, this
+					.getResources().getString(R.string.shareWith)));
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	private void initAdapter() {
 
 		adapter.add(new Conf(getResources().getString(R.string.txtBeginDate),
@@ -204,7 +213,7 @@ public class Main extends Activity {
 
 						AdelyaUtil.setPreferences(Main.this, "hourOut", ""
 								+ cal.getTimeInMillis());
-						
+
 						initAskerInTime();
 						dialog.dismiss();
 
@@ -401,7 +410,7 @@ public class Main extends Activity {
 		// On annule l'alarm pour replanifier si besoin
 		am.cancel(pendingintent);
 	}
-	
+
 	/**
 	 * Deactivate / activate options
 	 */

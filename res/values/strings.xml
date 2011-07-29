@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">Hello World, Main!</string>
-    <string name="app_name">AutoFlight</string>
+    <string name="app_name">AutoFlight Lite</string>
     <string name="labs">by labs.adelya.com</string>
     <string name="question">Voulez-vous passer en mode Avion?</string>
     <string name="yes">Oui</string>
@@ -13,9 +13,15 @@
     <string name="ok">Ok</string>
     <string name="cancel">Annuler</string>
     <string name="about">A propos</string>
+    <string name="share">Partager</string>
+    <string name="shareWith">Partager avec...</string>
     <string name="copyright">© Copyright Adelya</string>
-    <string name="configuration">Configurer</string>
+    <string name="configurate">Configurer</string>
+    <string name="configuration">Configuration</string>
     <string name="soundConf">Activer le son</string>
     <string name="vibrateConf">Activer la vibration</string>
     <string name="whatIsIt">Save battery and sleep quietly with autoflight mode switch.</string>
+    <string name="textToShare">Si vous avez un Android et que vous voulez garder votre batterie pendant que vous dormez, téléchargez AutoFlight ! http://sl.adelya.com/vsbol</string>
+    <string name="credits"><u>Crédits</u> :</string>
+    <string name="fullcredits">Laurent Gabardos - Adelya Team</string>
 </resources>

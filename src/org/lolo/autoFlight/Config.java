@@ -19,9 +19,9 @@ public class Config extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTitle("");
+		setTitle(getResources().getString(R.string.configuration));
 		setContentView(R.layout.config);
-
+		
 		final CheckBox cbSound = (CheckBox) findViewById(R.id.cbSound);
 		final CheckBox cbVibrate = (CheckBox) findViewById(R.id.cbVibrate);
 
