@@ -21,7 +21,7 @@ public class SleepAlarmReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent arg1) {
 
 		if (Boolean.parseBoolean(AdelyaUtil.getPreferences(context,
-				"chkActivate", "false"))) {
+				AdelyaUtil.PREF_ACTIVATE, "false"))) {
 			Intent notificationIntent = new Intent(context, Chooser.class);
 			// parametre de la nouvelle intent
 			notificationIntent.addFlags(Intent.FLAG_FROM_BACKGROUND);
@@ -30,14 +30,16 @@ public class SleepAlarmReceiver extends BroadcastReceiver {
 
 			// doit-on mettre le son?
 			if ("true".equals(AdelyaUtil.getPreferences(context,
-					"enableVibrate", "true"))) {
+					AdelyaUtil.PREF_VIBRATE, "true"))) {
 				// on fait vibrer un coup
 				Vibrator vib = (Vibrator) context
 						.getSystemService(Context.VIBRATOR_SERVICE);
-				vib.vibrate(500);
+				Integer vibrateTime = Integer.parseInt(AdelyaUtil
+						.getPreferences(context, AdelyaUtil.PREF_VIBRATE_TIME, "1"));
+				vib.vibrate(vibrateTime);
 			}
 			// doit-on mettre le son?
-			if ("true".equals(AdelyaUtil.getPreferences(context, "enableSound",
+			if ("true".equals(AdelyaUtil.getPreferences(context, AdelyaUtil.PREF_SOUND,
 					"true"))) {
 				// on jour le son
 				Ringtone ringtone = RingtoneManager

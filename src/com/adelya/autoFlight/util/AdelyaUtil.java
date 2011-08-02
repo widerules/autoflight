@@ -12,6 +12,14 @@ import android.content.SharedPreferences.Editor;
  */
 public class AdelyaUtil {
 
+	public static String PREF_HOURIN = "hour";
+	public static String PREF_HOUROUT = "hourOut";
+	public static String PREF_ACTIVATE = "chkActivate";
+	public static String PREF_SOUND = "enableSound";
+	public static String PREF_VIBRATE = "enableVibrate";
+	public static String PREF_VIBRATE_TIME = "vibrateTime";
+	
+
 	/**
 	 * Mise à jour d'une préférence
 	 * 

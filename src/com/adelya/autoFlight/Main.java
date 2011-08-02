@@ -60,13 +60,13 @@ public class Main extends Activity {
 
 		final CheckBox chkActivate = (CheckBox) findViewById(R.id.chkActivate);
 		chkActivate.setChecked(Boolean.parseBoolean(AdelyaUtil.getPreferences(
-				Main.this, "chkActivate", "false")));
+				Main.this, AdelyaUtil.PREF_ACTIVATE, "false")));
 		chkActivate.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 
-				AdelyaUtil.setPreferences(Main.this, "chkActivate",
+				AdelyaUtil.setPreferences(Main.this, AdelyaUtil.PREF_ACTIVATE,
 						Boolean.toString(((CheckBox) v).isChecked()));
 
 				toggleOptions(((CheckBox) v).isChecked());
@@ -78,7 +78,7 @@ public class Main extends Activity {
 		initAdapter();
 
 		toggleOptions(Boolean.parseBoolean(AdelyaUtil.getPreferences(Main.this,
-				"chkActivate", "true")));
+				AdelyaUtil.PREF_ACTIVATE, "true")));
 
 		initAskerInTime();
 
@@ -100,7 +100,8 @@ public class Main extends Activity {
 		case R.id.about:
 			intent = new Intent(Main.this, About.class);
 			startActivity(intent);
-			overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);
 			return true;
 		case R.id.config:
 			intent = new Intent(Main.this, Config.class);
@@ -109,7 +110,8 @@ public class Main extends Activity {
 		case R.id.share:
 			Intent MessIntent = new Intent(Intent.ACTION_SEND);
 			MessIntent.setType("text/plain");
-			MessIntent.putExtra(Intent.EXTRA_TEXT, this.getResources().getString(R.string.textToShare));
+			MessIntent.putExtra(Intent.EXTRA_TEXT, this.getResources()
+					.getString(R.string.textToShare));
 			Main.this.startActivity(Intent.createChooser(MessIntent, this
 					.getResources().getString(R.string.shareWith)));
 			return true;
@@ -152,12 +154,13 @@ public class Main extends Activity {
 						cal.set(Calendar.HOUR_OF_DAY, hour.intValue());
 						cal.set(Calendar.MINUTE, min.intValue());
 						cal.set(Calendar.SECOND, 0);
-						
+
 						startCal = cal;
 
 						setValue(cal);
 
-						AdelyaUtil.setPreferences(Main.this, "hour",
+						AdelyaUtil.setPreferences(Main.this,
+								AdelyaUtil.PREF_HOURIN,
 								"" + cal.getTimeInMillis());
 
 						initAskerInTime();
@@ -209,13 +212,14 @@ public class Main extends Activity {
 						cal.set(Calendar.HOUR_OF_DAY, hour.intValue());
 						cal.set(Calendar.MINUTE, min.intValue());
 						cal.set(Calendar.SECOND, 0);
-						
+
 						endCal = cal;
 
 						setValue(cal);
 
-						AdelyaUtil.setPreferences(Main.this, "hourOut", ""
-								+ cal.getTimeInMillis());
+						AdelyaUtil.setPreferences(Main.this,
+								AdelyaUtil.PREF_HOUROUT,
+								"" + cal.getTimeInMillis());
 
 						initAskerInTime();
 						dialog.dismiss();
@@ -273,8 +277,10 @@ public class Main extends Activity {
 	 */
 	private void initTimePicker() {
 		// et voici l'heure... En timmeInMillis of course
-		String hour = AdelyaUtil.getPreferences(Main.this, "hour", "");
-		String hourOut = AdelyaUtil.getPreferences(Main.this, "hourOut", "");
+		String hour = AdelyaUtil.getPreferences(Main.this,
+				AdelyaUtil.PREF_HOURIN, "");
+		String hourOut = AdelyaUtil.getPreferences(Main.this,
+				AdelyaUtil.PREF_HOUROUT, "");
 
 		startCal = Calendar.getInstance();
 		endCal = Calendar.getInstance();
@@ -322,8 +328,10 @@ public class Main extends Activity {
 	 */
 	private void initAskerInTime() {
 		// et voici l'heure... En timmeInMillis of course
-		String hour = AdelyaUtil.getPreferences(Main.this, "hour", "");
-		String hourOut = AdelyaUtil.getPreferences(Main.this, "hourOut", "");
+		String hour = AdelyaUtil.getPreferences(Main.this,
+				AdelyaUtil.PREF_HOURIN, "");
+		String hourOut = AdelyaUtil.getPreferences(Main.this,
+				AdelyaUtil.PREF_HOUROUT, "");
 
 		// a-t-on déjà configuré l'heure du mode avion
 		if (!"".equals(hour)) {
