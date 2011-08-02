@@ -10,6 +10,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import com.adelya.autoFlight.util.AdelyaUtil;
+
 public class SleepAlarmBootReceiver extends BroadcastReceiver {
 
 	@Override
@@ -19,8 +21,8 @@ public class SleepAlarmBootReceiver extends BroadcastReceiver {
 		SharedPreferences sp = context.getSharedPreferences("autoFlight",
 				Activity.MODE_WORLD_WRITEABLE);
 		// et voici l'heure... En timmeInMillis of course
-		String hour = sp.getString("hour", "");
-		String hourOut = sp.getString("hourOut", "");
+		String hour = sp.getString(AdelyaUtil.PREF_HOURIN, "");
+		String hourOut = sp.getString(AdelyaUtil.PREF_HOUROUT, "");
 		// si l'heure n'est pas trouvé, on se fait pas chié --> pas d'alarme
 		if (!"".equals(hour)) {
 
@@ -38,7 +40,7 @@ public class SleepAlarmBootReceiver extends BroadcastReceiver {
 			}
 			setAlarm(context, hourInMillis, SleepAlarmReceiver.class);
 			
-			if (!"".equals("hourOut")) {
+			if (!"".equals(AdelyaUtil.PREF_HOUROUT)) {
 
 				Long hourOutInMillis = Long.valueOf(hourOut);
 				

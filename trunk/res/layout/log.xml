@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:gravity="center_horizontal" android:orientation="vertical">
+	<TextView android:text="@string/logs" android:id="@+id/textView1"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:textSize="24dip">
+	</TextView>
+	<View android:layout_width="wrap_content" android:layout_height="1dip"
+		android:layout_marginTop="8dip" android:id="@+id/divider"
+		android:background="@android:drawable/divider_horizontal_dim_dark"
+		android:layout_below="@id/tvBy" />
+	<ScrollView android:layout_width="fill_parent" android:id="@+id/scrollView1"
+		android:layout_height="fill_parent">
+		<LinearLayout android:id="@+id/linearLayout1"
+			android:layout_height="fill_parent" android:layout_width="fill_parent"
+			android:paddingTop="10dip" android:orientation="vertical">
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:orientation="vertical"
+				android:paddingBottom="5dip" android:paddingTop="5dip">
+				<TextView android:layout_width="fill_parent" android:text="@string/txtBeginDate"
+					android:id="@+id/txtLogBeginDate" android:layout_height="wrap_content"
+					android:gravity="center_vertical" android:textSize="20dip">
+				</TextView>
+				<TextView android:layout_width="fill_parent" android:text=""
+					android:id="@+id/txtToFillBegin" android:layout_height="wrap_content"
+					android:gravity="center_vertical" android:textSize="16dip"
+					android:textStyle="italic">
+				</TextView>
+			</LinearLayout>
+			<View android:layout_width="wrap_content" android:layout_height="1dip"
+				android:id="@+id/divider" android:background="@android:drawable/divider_horizontal_bright" />
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:orientation="vertical"
+				android:paddingBottom="5dip" android:paddingTop="5dip">
+				<TextView android:layout_width="fill_parent" android:text="@string/txtBeginDate"
+					android:id="@+id/txtLogEndDate" android:layout_height="wrap_content"
+					android:gravity="center_vertical" android:textSize="20dip">
+				</TextView>
+				<TextView android:layout_width="fill_parent" android:text=""
+					android:id="@+id/txtToFillEnd" android:layout_height="wrap_content"
+					android:gravity="center_vertical" android:textSize="16dip"
+					android:textStyle="italic">
+				</TextView>
+			</LinearLayout>
+			<View android:layout_width="wrap_content" android:layout_height="1dip"
+				android:id="@+id/divider" android:background="@android:drawable/divider_horizontal_bright" />
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:orientation="vertical"
+				android:paddingBottom="5dip" android:paddingTop="5dip">
+				<TextView android:layout_width="fill_parent" android:text="@string/txtActivate"
+					android:id="@+id/txtLogActivate" android:layout_height="wrap_content"
+					android:gravity="center_vertical" android:textSize="20dip">
+				</TextView>
+				<TextView android:layout_width="fill_parent" android:text=""
+					android:id="@+id/txtToFillActivate" android:layout_height="wrap_content"
+					android:gravity="center_vertical" android:textSize="16dip"
+					android:textStyle="italic">
+				</TextView>
+			</LinearLayout>
+			<View android:layout_width="wrap_content" android:layout_height="1dip"
+				android:id="@+id/divider" android:background="@android:drawable/divider_horizontal_bright" />
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:orientation="vertical"
+				android:paddingBottom="5dip" android:paddingTop="5dip">
+				<TextView android:layout_width="fill_parent" android:text="@string/soundConf"
+					android:id="@+id/txtLogSound" android:layout_height="wrap_content"
+					android:gravity="center_vertical" android:textSize="20dip">
+				</TextView>
+				<TextView android:layout_width="fill_parent" android:text=""
+					android:id="@+id/txtToFillSound" android:layout_height="wrap_content"
+					android:gravity="center_vertical" android:textSize="16dip"
+					android:textStyle="italic">
+				</TextView>
+			</LinearLayout>
+			<View android:layout_width="wrap_content" android:layout_height="1dip"
+				android:id="@+id/divider" android:background="@android:drawable/divider_horizontal_bright" />
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:orientation="vertical"
+				android:paddingBottom="5dip" android:paddingTop="5dip">
+				<TextView android:layout_width="fill_parent" android:text="@string/vibrateConf"
+					android:id="@+id/txtLogVibrate" android:layout_height="wrap_content"
+					android:gravity="center_vertical" android:textSize="20dip">
+				</TextView>
+				<TextView android:layout_width="fill_parent" android:text=""
+					android:id="@+id/txtToFillVibrate" android:layout_height="wrap_content"
+					android:gravity="center_vertical" android:textSize="16dip"
+					android:textStyle="italic">
+				</TextView>
+			</LinearLayout>
+			<View android:layout_width="wrap_content" android:layout_height="1dip"
+				android:id="@+id/divider" android:background="@android:drawable/divider_horizontal_bright" />
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:orientation="vertical"
+				android:paddingBottom="5dip" android:paddingTop="5dip">
+				<TextView android:layout_width="fill_parent" android:text="@string/vibrateTime"
+					android:id="@+id/txtLogVibrateTime" android:layout_height="wrap_content"
+					android:gravity="center_vertical" android:textSize="20dip">
+				</TextView>
+				<TextView android:layout_width="fill_parent" android:text=""
+					android:id="@+id/txtToFillVibrateTime" android:layout_height="wrap_content"
+					android:gravity="center_vertical" android:textSize="16dip"
+					android:textStyle="italic">
+				</TextView>
+			</LinearLayout>
+		</LinearLayout>
+	</ScrollView>
+</LinearLayout>

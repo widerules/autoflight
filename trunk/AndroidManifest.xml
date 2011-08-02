@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.adelya.autoFlight" android:versionCode="2"
-	android:versionName="1.1">
+	package="com.adelya.autoFlight" android:versionCode="3"
+	android:versionName="1.1.1">
 	<uses-sdk android:minSdkVersion="7" />
 
 	<application android:icon="@drawable/icon" android:label="@string/app_name">
@@ -29,6 +29,8 @@
 		<activity android:name="com.adelya.autoFlight.Config" android:label="@string/app_name"
 			android:launchMode="singleTask" android:theme="@android:style/Theme.Dialog">
 		</activity>
+		
+		<activity android:name=".Log" android:label="@string/app_name" />
 
 		<receiver android:name="SleepAlarmReceiver" android:process=":remote" />
 		<receiver android:name="UnsleepAlarmReceiver"

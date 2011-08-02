@@ -20,7 +20,7 @@ public class Chooser extends Activity {
 		// on récupére l'heure à laquelle on devait sonner
 		// SharedPreferences sp = getSharedPreferences("autoFlight",
 		// Activity.MODE_WORLD_WRITEABLE);
-		// String hour = sp.getString("hour", "");
+		// String hour = sp.getString(AdelyaUtil.PREF_HOURIN, "");
 		// Long hourInMillis = Long.valueOf(hour);
 
 		// récupération du bouton oui

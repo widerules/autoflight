@@ -28,13 +28,15 @@ public class UnsleepAlarmReceiver extends BroadcastReceiver {
 
 
 		// doit-on mettre le son?
-		if ("true".equals(AdelyaUtil.getPreferences(context, "enableVibrate", "true"))) {
+		if ("true".equals(AdelyaUtil.getPreferences(context, AdelyaUtil.PREF_VIBRATE, "true"))) {
 			// on fait vibrer un coup
 			Vibrator vib = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-			vib.vibrate(500);
+			Integer vibrateTime = Integer.parseInt(AdelyaUtil
+					.getPreferences(context, AdelyaUtil.PREF_VIBRATE_TIME, "1"));
+			vib.vibrate(vibrateTime);
 		}
 		// doit-on mettre le son?
-		if ("true".equals(AdelyaUtil.getPreferences(context, "enableSound", "true"))) {
+		if ("true".equals(AdelyaUtil.getPreferences(context, AdelyaUtil.PREF_SOUND, "true"))) {
 			// on jour le son
 			Ringtone ringtone = RingtoneManager.getRingtone(context, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
 			ringtone.play();

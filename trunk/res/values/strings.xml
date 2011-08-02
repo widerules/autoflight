@@ -24,4 +24,7 @@
     <string name="textToShare">Si vous avez un Android et que vous voulez garder votre batterie pendant que vous dormez, téléchargez AutoFlight ! https://market.android.com/details?id=com.adelya.autoFlight</string>
     <string name="credits"><u>Crédits</u> :</string>
     <string name="fullcredits">Laurent Gabardos\nMathieu Veron\nAdelya Team</string>
+    <string name="logs">Configuration / Logs</string>
+    <string name="noConf">Pas de configuration</string>
+    <string name="vibrateTime">Durée de vibration</string>
 </resources>
