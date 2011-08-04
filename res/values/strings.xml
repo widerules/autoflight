@@ -27,4 +27,25 @@
     <string name="logs">Configuration / Logs</string>
     <string name="noConf">Pas de configuration</string>
     <string name="vibrateTime">Durée de vibration</string>
+    <string name="everyDays">Tous les jours</string>
+    <string name="chooseDays">Sélectionnez les jours</string>
+    <string name="choosenDays">Lun./Mar./Mer./Jeu./Ven./Sam./Dim.</string>
+    <string-array name="days">
+    	<item>Lundi</item>
+    	<item>Mardi</item>
+    	<item>Mercredi</item>
+    	<item>Jeudi</item>
+    	<item>Vendredi</item>
+    	<item>Samedi</item>
+    	<item>Dimanche</item>
+    </string-array>
+    <string-array name="short_days">
+    	<item>Lun.</item>
+    	<item>Mar.</item>
+    	<item>Mer.</item>
+    	<item>Jeu.</item>
+    	<item>Ven.</item>
+    	<item>Sam.</item>
+    	<item>Dim.</item>
+    </string-array>
 </resources>

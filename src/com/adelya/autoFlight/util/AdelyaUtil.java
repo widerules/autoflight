@@ -18,7 +18,7 @@ public class AdelyaUtil {
 	public static String PREF_SOUND = "enableSound";
 	public static String PREF_VIBRATE = "enableVibrate";
 	public static String PREF_VIBRATE_TIME = "vibrateTime";
-	
+	public static String PREF_CHOOSEN_DAYS = "choosenDays";
 
 	/**
 	 * Mise à jour d'une préférence
@@ -62,4 +62,12 @@ public class AdelyaUtil {
 		return settings.getString(key, defaut);
 	}
 	
+	/**
+	 * Méthode permettant de vérifier si une chaine n'est ni nulle ni vide
+	 * @param str Chaine a vérifier
+	 * @return True ==> Chaine vide ou nulle
+	 */
+	public static Boolean isEmpty(String str) {
+		return str == null || "".equals(str);
+	}
 }
