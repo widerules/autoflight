@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/linearLayout1" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:orientation="vertical">
+	<ListView android:id="@+id/lvDays" android:layout_height="0dip"
+		android:layout_width="fill_parent" android:layout_weight="9"
+		android:choiceMode="multipleChoice">
+	</ListView>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="0dip" android:orientation="horizontal"
+		android:background="#999" android:layout_marginTop="5dip"
+		android:layout_weight="1.5">
+		<Button android:id="@+id/btnConfOk" android:layout_width="0dip"
+			android:layout_height="wrap_content" android:layout_weight="1"
+			android:layout_margin="4dip" android:text="@string/ok" />
+		<Button android:id="@+id/btnConfCancel" android:layout_width="0dip"
+			android:layout_height="wrap_content" android:layout_weight="1"
+			android:layout_margin="4dip" android:text="@string/cancel" />
+	</LinearLayout>
+</LinearLayout>

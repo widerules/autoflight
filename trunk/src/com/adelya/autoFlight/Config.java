@@ -32,9 +32,9 @@ public class Config extends Activity {
 		final SeekBar seekBar = (SeekBar) findViewById(R.id.seekBarVibrate);
 
 		cbSound.setChecked(AdelyaUtil.getPreferences(Config.this,
-				AdelyaUtil.PREF_SOUND, "true").equals("true"));
+				AdelyaUtil.PREF_SOUND, "False").equals("true"));
 		cbVibrate.setChecked(AdelyaUtil.getPreferences(Config.this,
-				AdelyaUtil.PREF_VIBRATE, "true").equals("true"));
+				AdelyaUtil.PREF_VIBRATE, "False").equals("true"));
 		cbVibrate.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

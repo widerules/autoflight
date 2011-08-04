@@ -8,6 +8,7 @@ import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,16 +16,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TimePicker;
+import android.widget.TimePicker.OnTimeChangedListener;
 
 import com.adelya.autoFlight.bean.Conf;
 import com.adelya.autoFlight.listview.ConfAdapter;
+import com.adelya.autoFlight.listview.SelectDayAdapter;
 import com.adelya.autoFlight.util.AdelyaUtil;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
@@ -128,8 +134,64 @@ public class Main extends Activity {
 			public void launchAction() {
 
 				final Dialog dialog = new Dialog(Main.this);
+				final String firstTitle = this.getLabel();
 				dialog.setContentView(R.layout.dialog_time);
-				dialog.setTitle(this.getLabel());
+				dialog.setTitle(this.getLabel() + " - "
+						+ startCal.get(Calendar.HOUR_OF_DAY) + ":"
+						+ startCal.get(Calendar.MINUTE));
+
+				WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+				lp.copyFrom(dialog.getWindow().getAttributes());
+				lp.width = WindowManager.LayoutParams.FILL_PARENT;
+				lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+				dialog.getWindow().setAttributes(lp);
+
+				final ListView lvSelect = (ListView) dialog
+						.findViewById(R.id.lvSelectDay);
+				final SelectDayAdapter test = new SelectDayAdapter(dialog
+						.getContext());
+				final CheckBox cbEveryDay = (CheckBox) dialog
+						.findViewById(R.id.cbEveryDay);
+				
+				lvSelect.setAdapter(test);
+				lvSelect.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						Dialog days = new ChooseDays(dialog.getContext());
+						days.setOnCancelListener(new DialogInterface.OnCancelListener() {
+							@Override
+							public void onCancel(DialogInterface d) {
+								if (AdelyaUtil.getPreferences(Main.this, AdelyaUtil.PREF_CHOOSEN_DAYS).startsWith("0,1,2,3,4,5,6")) {
+									cbEveryDay.setChecked(Boolean.TRUE);
+								} else {
+									cbEveryDay.setChecked(Boolean.FALSE);
+								}
+								lvSelect.setAdapter(test);
+							}
+						});
+						days.show();
+					}
+				});
+				cbEveryDay
+						.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+							@Override
+							public void onCheckedChanged(
+									CompoundButton buttonView, boolean isChecked) {
+								String newValue = "";
+								if (isChecked) {
+									newValue = "0,1,2,3,4,5,6";
+									AdelyaUtil.setPreferences(Main.this,
+											AdelyaUtil.PREF_CHOOSEN_DAYS, newValue);
+								}
+								lvSelect.setAdapter(test);
+							}
+						});
+				// tous les jours de sélectionnés?
+				String days = AdelyaUtil.getPreferences(Main.this,
+						AdelyaUtil.PREF_CHOOSEN_DAYS, "");
+				cbEveryDay.setChecked(days.startsWith("0,1,2,3,4,5,6"));
 
 				// ouverture de la dialog permettant de choisir l'heure de début
 				final TimePicker tp = (TimePicker) dialog
@@ -137,6 +199,15 @@ public class Main extends Activity {
 				tp.setIs24HourView(Boolean.TRUE);
 				tp.setCurrentHour(startCal.get(Calendar.HOUR_OF_DAY));
 				tp.setCurrentMinute(startCal.get(Calendar.MINUTE));
+				tp.setOnTimeChangedListener(new OnTimeChangedListener() {
+
+					@Override
+					public void onTimeChanged(TimePicker t, int hourOfDay,
+							int minute) {
+						dialog.setTitle(firstTitle + " - " + hourOfDay + ":"
+								+ minute);
+					}
+				});
 				// set du bouton ok
 				Button ok = (Button) dialog.findViewById(R.id.btnConfOk);
 				ok.setOnClickListener(new OnClickListener() {
@@ -186,8 +257,17 @@ public class Main extends Activity {
 			public void launchAction() {
 
 				final Dialog dialog = new Dialog(Main.this);
-				dialog.setContentView(R.layout.dialog_time);
-				dialog.setTitle(this.getLabel());
+				final String firstTitle = this.getLabel();
+				dialog.setContentView(R.layout.dialog_endtime);
+				dialog.setTitle(this.getLabel() + " - "
+						+ endCal.get(Calendar.HOUR_OF_DAY) + ":"
+						+ endCal.get(Calendar.MINUTE));
+
+				WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+				lp.copyFrom(dialog.getWindow().getAttributes());
+				lp.width = WindowManager.LayoutParams.FILL_PARENT;
+				lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+				dialog.getWindow().setAttributes(lp);
 
 				// ouverture de la dialog permettant de choisir l'heure de début
 				final TimePicker tp = (TimePicker) dialog
@@ -195,6 +275,15 @@ public class Main extends Activity {
 				tp.setIs24HourView(Boolean.TRUE);
 				tp.setCurrentHour(endCal.get(Calendar.HOUR_OF_DAY));
 				tp.setCurrentMinute(endCal.get(Calendar.MINUTE));
+				tp.setOnTimeChangedListener(new OnTimeChangedListener() {
+
+					@Override
+					public void onTimeChanged(TimePicker t, int hourOfDay,
+							int minute) {
+						dialog.setTitle(firstTitle + " - " + hourOfDay + ":"
+								+ minute);
+					}
+				});
 				// set du bouton ok
 				Button ok = (Button) dialog.findViewById(R.id.btnConfOk);
 				ok.setOnClickListener(new OnClickListener() {
