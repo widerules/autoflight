@@ -152,7 +152,7 @@ public class Main extends Activity {
 						.getContext());
 				final CheckBox cbEveryDay = (CheckBox) dialog
 						.findViewById(R.id.cbEveryDay);
-				
+
 				lvSelect.setAdapter(test);
 				lvSelect.setOnItemClickListener(new OnItemClickListener() {
 					@Override
@@ -162,7 +162,9 @@ public class Main extends Activity {
 						days.setOnCancelListener(new DialogInterface.OnCancelListener() {
 							@Override
 							public void onCancel(DialogInterface d) {
-								if (AdelyaUtil.getPreferences(Main.this, AdelyaUtil.PREF_CHOOSEN_DAYS).startsWith("0,1,2,3,4,5,6")) {
+								if (AdelyaUtil.getPreferences(Main.this,
+										AdelyaUtil.PREF_CHOOSEN_DAYS)
+										.startsWith("0,1,2,3,4,5,6")) {
 									cbEveryDay.setChecked(Boolean.TRUE);
 								} else {
 									cbEveryDay.setChecked(Boolean.FALSE);
@@ -183,7 +185,8 @@ public class Main extends Activity {
 								if (isChecked) {
 									newValue = "0,1,2,3,4,5,6";
 									AdelyaUtil.setPreferences(Main.this,
-											AdelyaUtil.PREF_CHOOSEN_DAYS, newValue);
+											AdelyaUtil.PREF_CHOOSEN_DAYS,
+											newValue);
 								}
 								lvSelect.setAdapter(test);
 							}
@@ -438,7 +441,10 @@ public class Main extends Activity {
 
 				hourInMillis = alarmHour.getTimeInMillis();
 			}
-			setAlarm(hourInMillis, SleepAlarmReceiver.class);
+			if (Boolean.parseBoolean(AdelyaUtil.getPreferences(Main.this,
+					AdelyaUtil.PREF_ACTIVATE, "false"))) {
+				setAlarm(hourInMillis, SleepAlarmReceiver.class);
+			}
 		}
 
 		// s'il n'y a pas d'heure de out flight, on ne sette rien
@@ -457,7 +463,10 @@ public class Main extends Activity {
 
 				hourOutInMillis = alarmHour.getTimeInMillis();
 			}
-			setAlarm(hourOutInMillis, UnsleepAlarmReceiver.class);
+			if (Boolean.parseBoolean(AdelyaUtil.getPreferences(Main.this,
+					AdelyaUtil.PREF_ACTIVATE, "false"))) {
+				setAlarm(hourOutInMillis, UnsleepAlarmReceiver.class);
+			}
 		}
 	}
 
@@ -468,6 +477,8 @@ public class Main extends Activity {
 	 * @param classToLaunch La classe à lancer lors de réveil
 	 */
 	private void setAlarm(Long time, Class<?> classToLaunch) {
+		// On annule l'alarm pour replanifier si besoin
+		removeAlarm(classToLaunch);
 
 		// Récupération de l'instance du service AlarmManager.
 		AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
@@ -479,9 +490,6 @@ public class Main extends Activity {
 		// ID et un/des flag(s)
 		PendingIntent pendingintent = PendingIntent.getBroadcast(this, 0,
 				intent, 0);
-
-		// On annule l'alarm pour replanifier si besoin
-		removeAlarm(classToLaunch);
 
 		// ok maintenant, on va faire la différence entre l'heure actuelle et
 		// celle choisie
@@ -509,6 +517,7 @@ public class Main extends Activity {
 				intent, 0);
 		// On annule l'alarm pour replanifier si besoin
 		am.cancel(pendingintent);
+		pendingintent.cancel();
 	}
 
 	/**

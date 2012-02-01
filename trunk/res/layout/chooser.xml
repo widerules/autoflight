@@ -23,11 +23,15 @@
 		 android:background="#999" android:gravity="center">
 		<Button android:id="@+id/btnYes" android:text="@string/yes"
 			android:layout_width="0dip" android:layout_height="wrap_content"
+			android:layout_weight="0.8" android:layout_margin="4dip">
+		</Button>
+		<Button android:id="@+id/btnReport" android:text="@string/report"
+			android:layout_width="0dip" android:layout_height="wrap_content"
 			android:layout_weight="1" android:layout_margin="4dip">
 		</Button>
 		<Button android:id="@+id/btnNo" android:text="@string/no"
 			android:layout_width="0dip" android:layout_height="wrap_content"
-			android:layout_weight="1" android:layout_margin="4dip">
+			android:layout_weight="0.8" android:layout_margin="4dip">
 		</Button>
 	</LinearLayout>
 </LinearLayout>
