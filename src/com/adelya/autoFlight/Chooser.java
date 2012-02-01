@@ -1,6 +1,11 @@
 package com.adelya.autoFlight;
 
+import java.util.Calendar;
+
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -17,16 +22,12 @@ public class Chooser extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.chooser);
 
-		// on récupére l'heure à laquelle on devait sonner
-		// SharedPreferences sp = getSharedPreferences("autoFlight",
-		// Activity.MODE_WORLD_WRITEABLE);
-		// String hour = sp.getString(AdelyaUtil.PREF_HOURIN, "");
-		// Long hourInMillis = Long.valueOf(hour);
-
 		// récupération du bouton oui
 		Button btnYes = (Button) findViewById(R.id.btnYes);
 		// récupération du bouton non
 		Button btnNo = (Button) findViewById(R.id.btnNo);
+		// le bouton de report de 5 minutes
+		Button btnReport = (Button) findViewById(R.id.btnReport);
 		// récupération du chrono
 		final TextView chrono = (TextView) findViewById(R.id.textViewCountDown);
 		final CountDownTimer counter = new CountDownTimer(60000, 1000) {
@@ -47,6 +48,29 @@ public class Chooser extends Activity {
 			public void onClick(View v) {
 				counter.cancel();
 				launchFlightMode();
+			}
+		});
+		
+		btnReport.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				counter.cancel();
+				Chooser.this.finish();
+				// Récupération de l'instance du service AlarmManager.
+				AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+				// On instancie l'Intent qui va être appelé au moment du reveil.
+				Intent intent = new Intent(Chooser.this, SleepAlarmReceiver.class);
+
+				// On créer le pending Intent qui identifie l'Intent de reveil avec un
+				// ID et un/des flag(s)
+				PendingIntent pendingintent = PendingIntent.getBroadcast(Chooser.this, 0,
+						intent, 0);
+
+				// On ajoute le reveil au service de l'AlarmManager
+				long actualTime = Calendar.getInstance().getTimeInMillis();
+				am.set(AlarmManager.RTC_WAKEUP, actualTime + (5 * 60 * 1000), pendingintent);
+
 			}
 		});
 

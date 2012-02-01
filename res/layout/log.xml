@@ -33,7 +33,7 @@
 			<LinearLayout android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:orientation="vertical"
 				android:paddingBottom="5dip" android:paddingTop="5dip">
-				<TextView android:layout_width="fill_parent" android:text="@string/txtBeginDate"
+				<TextView android:layout_width="fill_parent" android:text="@string/txtEndDate"
 					android:id="@+id/txtLogEndDate" android:layout_height="wrap_content"
 					android:gravity="center_vertical" android:textSize="20dip">
 				</TextView>
@@ -99,6 +99,51 @@
 				</TextView>
 				<TextView android:layout_width="fill_parent" android:text=""
 					android:id="@+id/txtToFillVibrateTime" android:layout_height="wrap_content"
+					android:gravity="center_vertical" android:textSize="16dip"
+					android:textStyle="italic">
+				</TextView>
+			</LinearLayout>
+			<View android:layout_width="wrap_content" android:layout_height="1dip"
+				android:id="@+id/divider" android:background="@android:drawable/divider_horizontal_bright" />
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:orientation="vertical"
+				android:paddingBottom="5dip" android:paddingTop="5dip">
+				<TextView android:layout_width="fill_parent" android:text="@string/chooseDays"
+					android:id="@+id/txtTitleSettedDays" android:layout_height="wrap_content"
+					android:gravity="center_vertical" android:textSize="20dip">
+				</TextView>
+				<TextView android:layout_width="fill_parent" android:text=""
+					android:id="@+id/txtSettedDays" android:layout_height="wrap_content"
+					android:gravity="center_vertical" android:textSize="16dip"
+					android:textStyle="italic">
+				</TextView>
+			</LinearLayout>
+			<View android:layout_width="wrap_content" android:layout_height="1dip"
+				android:id="@+id/divider" android:background="@android:drawable/divider_horizontal_bright" />
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:orientation="vertical"
+				android:paddingBottom="5dip" android:paddingTop="5dip">
+				<TextView android:layout_width="fill_parent" android:text="@string/alarmIn"
+					android:id="@+id/txtTitleAlarmIn" android:layout_height="wrap_content"
+					android:gravity="center_vertical" android:textSize="20dip">
+				</TextView>
+				<TextView android:layout_width="fill_parent" android:text=""
+					android:id="@+id/txtSettedAlarmIn" android:layout_height="wrap_content"
+					android:gravity="center_vertical" android:textSize="16dip"
+					android:textStyle="italic">
+				</TextView>
+			</LinearLayout>
+			<View android:layout_width="wrap_content" android:layout_height="1dip"
+				android:id="@+id/divider" android:background="@android:drawable/divider_horizontal_bright" />
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:orientation="vertical"
+				android:paddingBottom="5dip" android:paddingTop="5dip">
+				<TextView android:layout_width="fill_parent" android:text="@string/alarmOut"
+					android:id="@+id/txtTitleAlarmOut" android:layout_height="wrap_content"
+					android:gravity="center_vertical" android:textSize="20dip">
+				</TextView>
+				<TextView android:layout_width="fill_parent" android:text=""
+					android:id="@+id/txtSettedAlarmOut" android:layout_height="wrap_content"
 					android:gravity="center_vertical" android:textSize="16dip"
 					android:textStyle="italic">
 				</TextView>

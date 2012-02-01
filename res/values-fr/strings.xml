@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, Main!</string>
+    <string name="app_name">AutoFlight Lite</string>
+    <string name="labs">by labs.adelya.com</string>
+    <string name="question">Voulez-vous passer en mode Avion?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="report">+ 5 minutes</string>
+    <string name="bigTitle">Configuration</string>
+    <string name="txtActivate">Activer</string>
+    <string name="txtBeginDate">Entrée en mode avion</string>
+    <string name="txtEndDate">Sortie du mode avion</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Annuler</string>
+    <string name="about">A propos</string>
+    <string name="share">Partager</string>
+    <string name="shareWith">Partager avec...</string>
+    <string name="copyright">© Copyright Adelya</string>
+    <string name="configurate">Configurer</string>
+    <string name="configuration">Configuration</string>
+    <string name="soundConf">Activer le son</string>
+    <string name="vibrateConf">Activer la vibration</string>
+    <string name="whatIsIt">Economise de la batterie et dors paisiblement avec le mode avion automatique.</string>
+    <string name="textToShare">Si vous avez un Android et que vous voulez garder votre batterie pendant que vous dormez, téléchargez AutoFlight ! https://market.android.com/details?id=com.adelya.autoFlight</string>
+    <string name="credits"><u>Crédits</u> :</string>
+    <string name="fullcredits">Laurent Gabardos\nMathieu Veron\nAdelya Team</string>
+    <string name="logs">Configuration / Logs</string>
+    <string name="noConf">Pas de configuration</string>
+    <string name="vibrateTime">Durée de vibration</string>
+    <string name="everyDays">Tous les jours</string>
+    <string name="chooseDays">Sélectionnez les jours</string>
+    <string name="choosenDays">Lun./Mar./Mer./Jeu./Ven./Sam./Dim.</string>
+    <string-array name="days">
+    	<item>Lundi</item>
+    	<item>Mardi</item>
+    	<item>Mercredi</item>
+    	<item>Jeudi</item>
+    	<item>Vendredi</item>
+    	<item>Samedi</item>
+    	<item>Dimanche</item>
+    </string-array>
+    <string-array name="short_days">
+    	<item>Lun.</item>
+    	<item>Mar.</item>
+    	<item>Mer.</item>
+    	<item>Jeu.</item>
+    	<item>Ven.</item>
+    	<item>Sam.</item>
+    	<item>Dim.</item>
+    </string-array>
+    <string name="alarmIn">Alarme d\'entrée enregistrée\?</string>
+    <string name="alarmOut">Alarme de sortie enregistrée\?</string>
+</resources>
